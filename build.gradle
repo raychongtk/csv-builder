@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group 'app.csv.builder'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile "org.junit.jupiter:junit-jupiter-api:5.7.0"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.0"
+    testCompile "org.assertj:assertj-core:3.8.0"
+}
+
+test {
+    useJUnitPlatform()
+}

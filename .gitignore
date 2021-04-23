@@ -1,0 +1,11 @@
+.idea/
+/.gradle/
+build/
+*.iml
+/classes/
+**/src/dev/java/
+.DS_Store
+wiki/
+**/.vs
+**/bin/*
+**/obj/*

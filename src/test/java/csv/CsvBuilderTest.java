@@ -17,6 +17,6 @@ class CsvBuilderTest {
         builder.appendMoney(BigDecimal.valueOf(12.50));
         builder.appendMoney(BigDecimal.valueOf(12.57));
         builder.appendNextLine();
-        assertThat(builder.build()).isEqualTo("\uFEFF\"12,123,123.59\",\"123.59\",\"12\",\"12.5\",\"12.57\"\n".getBytes(StandardCharsets.UTF_8));
+        assertThat(builder.buildByte()).isEqualTo("\uFEFF\"12,123,123.59\",\"123.59\",\"12\",\"12.5\",\"12.57\"\n".getBytes(StandardCharsets.UTF_8));
     }
 }

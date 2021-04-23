@@ -76,8 +76,12 @@ public class CsvBuilder {
         shouldWriteComma = false;
     }
 
-    public byte[] build() {
+    public byte[] buildByte() {
         return builder.toString().getBytes(StandardCharsets.UTF_8);
+    }
+
+    public String buildString() {
+        return builder.toString();
     }
 
     private void insert(String text) {

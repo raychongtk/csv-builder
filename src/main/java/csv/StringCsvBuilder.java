@@ -6,8 +6,8 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 
 import static csv.config.CsvConfig.DATE_TIME_FORMATTER;
+import static csv.config.CsvConfig.DEFAULT_DELIMITER;
 import static csv.config.CsvConfig.DEFAULT_TEXT;
-import static csv.config.CsvConfig.DELIMITER;
 import static csv.config.CsvConfig.DOUBLE_QUOTES;
 import static csv.config.CsvConfig.NEW_LINE;
 import static csv.config.CsvConfig.NUMBER_AS_STRING_FORMAT;
@@ -19,14 +19,17 @@ import static csv.config.CsvConfig.UTF8_BOM;
  */
 public class StringCsvBuilder implements CsvBuilder {
     private final StringBuilder builder;
-    public boolean numberAsString = true; // for applying NUMBER_AS_STRING_FORMAT to data, make excel to interpret value as text
+    private final String separator;
+    private final boolean numberAsString; // for applying NUMBER_AS_STRING_FORMAT to data, make excel to interpret value as text
     private boolean shouldWriteComma = false;
 
     public StringCsvBuilder() {
-        this(true);
+        this(DEFAULT_DELIMITER, false, true);
     }
 
-    public StringCsvBuilder(boolean appendBOM) {
+    public StringCsvBuilder(String separator, boolean numberAsString, boolean appendBOM) {
+        this.separator = separator;
+        this.numberAsString = numberAsString;
         if (appendBOM) {
             builder = new StringBuilder(UTF8_BOM);
         } else {
@@ -77,7 +80,7 @@ public class StringCsvBuilder implements CsvBuilder {
     }
 
     private void insert(String text) {
-        if (shouldWriteComma) builder.append(DELIMITER);
+        if (shouldWriteComma) builder.append(separator);
         builder.append(QUOTE).append(text).append(QUOTE);
         shouldWriteComma = true;
     }

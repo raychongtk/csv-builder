@@ -9,9 +9,9 @@ import java.time.format.DateTimeFormatter;
  */
 public class CsvConfig {
     public static final char NEW_LINE = '\n';
-    public static final char DELIMITER = ',';
     public static final char QUOTE = '\"';
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneIds.ASIA_SHANGHAI);
+    public static final String DEFAULT_DELIMITER = ",";
     public static final String DEFAULT_TEXT = "-";
     public static final String DOUBLE_QUOTES = "\"\"";
     public static final String NUMBER_AS_STRING_FORMAT = "=\"\"%s\"\"";

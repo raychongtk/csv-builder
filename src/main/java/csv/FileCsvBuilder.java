@@ -14,8 +14,8 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 
 import static csv.config.CsvConfig.DATE_TIME_FORMATTER;
+import static csv.config.CsvConfig.DEFAULT_DELIMITER;
 import static csv.config.CsvConfig.DEFAULT_TEXT;
-import static csv.config.CsvConfig.DELIMITER;
 import static csv.config.CsvConfig.DOUBLE_QUOTES;
 import static csv.config.CsvConfig.NUMBER_AS_STRING_FORMAT;
 import static csv.config.CsvConfig.QUOTE;
@@ -28,15 +28,18 @@ public class FileCsvBuilder implements CsvBuilder {
     private final Logger logger = LoggerFactory.getLogger(FileCsvBuilder.class);
     private final BufferedWriter writer;
     private final String fileName;
-    public boolean numberAsString = true; // for applying NUMBER_AS_STRING_FORMAT to data, make excel to interpret value as text
+    private final String separator;
+    private final boolean numberAsString; // for applying NUMBER_AS_STRING_FORMAT to data, make excel to interpret value as text
     private boolean shouldWriteComma = false;
 
     public FileCsvBuilder(String fileName) throws IOException {
-        this(fileName, true);
+        this(fileName, DEFAULT_DELIMITER, false, true);
     }
 
-    public FileCsvBuilder(String fileName, boolean appendBOM) throws IOException {
+    public FileCsvBuilder(String fileName, String separator, boolean numberAsString, boolean appendBOM) throws IOException {
         this.fileName = fileName;
+        this.separator = separator;
+        this.numberAsString = numberAsString;
         writer = Files.newBufferedWriter(Paths.get(fileName), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         if (appendBOM) writer.write(UTF8_BOM);
     }
@@ -101,7 +104,7 @@ public class FileCsvBuilder implements CsvBuilder {
 
     private void insert(String text) {
         try {
-            if (shouldWriteComma) writer.append(DELIMITER);
+            if (shouldWriteComma) writer.append(separator);
             writer.append(QUOTE).append(text).append(QUOTE);
             shouldWriteComma = true;
         } catch (IOException ex) {

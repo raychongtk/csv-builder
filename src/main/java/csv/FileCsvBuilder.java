@@ -28,17 +28,17 @@ public class FileCsvBuilder implements CsvBuilder {
     private final Logger logger = LoggerFactory.getLogger(FileCsvBuilder.class);
     private final BufferedWriter writer;
     private final String fileName;
-    private final String separator;
+    private final String delimiter;
     private final boolean numberAsString; // for applying NUMBER_AS_STRING_FORMAT to data, make excel to interpret value as text
-    private boolean shouldAppendSeparator = false;
+    private boolean shouldAppendDelimiter = false;
 
     public FileCsvBuilder(String fileName) throws IOException {
         this(fileName, DEFAULT_DELIMITER, false, true);
     }
 
-    public FileCsvBuilder(String fileName, String separator, boolean numberAsString, boolean appendBOM) throws IOException {
+    public FileCsvBuilder(String fileName, String delimiter, boolean numberAsString, boolean appendBOM) throws IOException {
         this.fileName = fileName;
-        this.separator = separator;
+        this.delimiter = delimiter;
         this.numberAsString = numberAsString;
         writer = Files.newBufferedWriter(Paths.get(fileName), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         if (appendBOM) writer.write(UTF8_BOM);
@@ -86,7 +86,7 @@ public class FileCsvBuilder implements CsvBuilder {
     public void appendNextLine() {
         try {
             writer.newLine();
-            shouldAppendSeparator = false;
+            shouldAppendDelimiter = false;
         } catch (IOException ex) {
             logger.error("cannot write csv file", ex);
         }
@@ -104,9 +104,9 @@ public class FileCsvBuilder implements CsvBuilder {
 
     private void insert(String text) {
         try {
-            if (shouldAppendSeparator) writer.append(separator);
+            if (shouldAppendDelimiter) writer.append(delimiter);
             writer.append(QUOTE).append(text).append(QUOTE);
-            shouldAppendSeparator = true;
+            shouldAppendDelimiter = true;
         } catch (IOException ex) {
             logger.error("cannot write csv file", ex);
         }

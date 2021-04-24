@@ -19,16 +19,16 @@ import static csv.config.CsvConfig.UTF8_BOM;
  */
 public class StringCsvBuilder implements CsvBuilder {
     private final StringBuilder builder;
-    private final String separator;
+    private final String delimiter;
     private final boolean numberAsString; // for applying NUMBER_AS_STRING_FORMAT to data, make excel to interpret value as text
-    private boolean shouldAppendSeparator = false;
+    private boolean shouldAppendDelimiter = false;
 
     public StringCsvBuilder() {
         this(DEFAULT_DELIMITER, false, true);
     }
 
-    public StringCsvBuilder(String separator, boolean numberAsString, boolean appendBOM) {
-        this.separator = separator;
+    public StringCsvBuilder(String delimiter, boolean numberAsString, boolean appendBOM) {
+        this.delimiter = delimiter;
         this.numberAsString = numberAsString;
         if (appendBOM) {
             builder = new StringBuilder(UTF8_BOM);
@@ -72,7 +72,7 @@ public class StringCsvBuilder implements CsvBuilder {
 
     public void appendNextLine() {
         builder.append(NEW_LINE);
-        shouldAppendSeparator = false;
+        shouldAppendDelimiter = false;
     }
 
     public String build() {
@@ -80,8 +80,8 @@ public class StringCsvBuilder implements CsvBuilder {
     }
 
     private void insert(String text) {
-        if (shouldAppendSeparator) builder.append(separator);
+        if (shouldAppendDelimiter) builder.append(delimiter);
         builder.append(QUOTE).append(text).append(QUOTE);
-        shouldAppendSeparator = true;
+        shouldAppendDelimiter = true;
     }
 }

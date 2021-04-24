@@ -30,7 +30,7 @@ public class FileCsvBuilder implements CsvBuilder {
     private final String fileName;
     private final String separator;
     private final boolean numberAsString; // for applying NUMBER_AS_STRING_FORMAT to data, make excel to interpret value as text
-    private boolean shouldWriteComma = false;
+    private boolean shouldAppendSeparator = false;
 
     public FileCsvBuilder(String fileName) throws IOException {
         this(fileName, DEFAULT_DELIMITER, false, true);
@@ -86,7 +86,7 @@ public class FileCsvBuilder implements CsvBuilder {
     public void appendNextLine() {
         try {
             writer.newLine();
-            shouldWriteComma = false;
+            shouldAppendSeparator = false;
         } catch (IOException ex) {
             logger.error("cannot write csv file", ex);
         }
@@ -104,9 +104,9 @@ public class FileCsvBuilder implements CsvBuilder {
 
     private void insert(String text) {
         try {
-            if (shouldWriteComma) writer.append(separator);
+            if (shouldAppendSeparator) writer.append(separator);
             writer.append(QUOTE).append(text).append(QUOTE);
-            shouldWriteComma = true;
+            shouldAppendSeparator = true;
         } catch (IOException ex) {
             logger.error("cannot write csv file", ex);
         }

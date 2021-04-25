@@ -16,6 +16,6 @@ public class CsvConfig {
     public static final String DEFAULT_DELIMITER = ",";
     public static final String DEFAULT_TEXT = "-";
     public static final String DOUBLE_QUOTES = "\"\"";
-    public static final String NUMBER_AS_STRING_FORMAT = "=\"\"%s\"\"";
+    public static final String NUMBER_AS_STRING_FORMAT = "=\"\"{}\"\"";
     public static final String UTF8_BOM = "\uFEFF"; // UTF-8 Byte Order Mark (BOM) is used to tell excel that this file is encoded by Unicode
 }

@@ -4,6 +4,7 @@ import csv.format.CsvFormatter;
 import csv.format.CsvFormatterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.Strings;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class FileCsvBuilder implements CsvBuilder {
     public CsvBuilder append(String text) {
         String value = Optional.ofNullable(text).orElse(formatter.defaultText);
         String escapedText = value.replace(String.valueOf(QUOTE), DOUBLE_QUOTES);
-        String preparedText = formatter.numberAsString ? String.format(NUMBER_AS_STRING_FORMAT, escapedText) : escapedText;
+        String preparedText = formatter.numberAsString ? Strings.format(NUMBER_AS_STRING_FORMAT, escapedText) : escapedText;
         insert(preparedText);
         return this;
     }

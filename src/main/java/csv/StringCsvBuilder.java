@@ -5,7 +5,6 @@ import csv.format.CsvFormatterFactory;
 import util.Strings;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
@@ -63,7 +62,6 @@ public class StringCsvBuilder implements CsvBuilder {
     }
 
     public CsvBuilder appendMoney(BigDecimal money) {
-        var moneyFormat = new DecimalFormat("###,###.##");
         String preparedText = Optional.ofNullable(money).isEmpty() ? formatter.defaultText : formatter.moneyFormat.format(money);
         insert(preparedText);
         return this;

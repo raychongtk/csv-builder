@@ -43,37 +43,37 @@ public class FileCsvBuilder implements CsvBuilder {
 
     @Override
     public CsvBuilder append(String text) {
-        String value = Optional.ofNullable(text).orElse(formatter.defaultText);
+        String value = Optional.ofNullable(text).orElse(formatter.defaultText());
         String escapedText = value.replace(String.valueOf(QUOTE), DOUBLE_QUOTES);
-        String preparedText = formatter.numberAsString ? Strings.format(NUMBER_AS_STRING_FORMAT, escapedText) : escapedText;
+        String preparedText = formatter.numberAsString() ? Strings.format(NUMBER_AS_STRING_FORMAT, escapedText) : escapedText;
         insert(preparedText);
         return this;
     }
 
     @Override
     public CsvBuilder append(BigDecimal bigDecimal) {
-        String preparedText = Optional.ofNullable(bigDecimal).isEmpty() ? formatter.defaultText : bigDecimal.toString();
+        String preparedText = Optional.ofNullable(bigDecimal).isEmpty() ? formatter.defaultText() : bigDecimal.toString();
         insert(preparedText);
         return this;
     }
 
     @Override
     public CsvBuilder append(ZonedDateTime zonedDateTime) {
-        String preparedText = Optional.ofNullable(zonedDateTime).isEmpty() ? formatter.defaultText : zonedDateTime.format(formatter.dateTimeFormatter);
+        String preparedText = Optional.ofNullable(zonedDateTime).isEmpty() ? formatter.defaultText() : zonedDateTime.format(formatter.dateTimeFormat());
         insert(preparedText);
         return this;
     }
 
     @Override
     public CsvBuilder append(Enum<?> enumValue) {
-        String preparedText = Optional.ofNullable(enumValue).isEmpty() ? formatter.defaultText : enumValue.name();
+        String preparedText = Optional.ofNullable(enumValue).isEmpty() ? formatter.defaultText() : enumValue.name();
         insert(preparedText);
         return this;
     }
 
     @Override
     public CsvBuilder appendMoney(BigDecimal money) {
-        String preparedText = Optional.ofNullable(money).isEmpty() ? formatter.defaultText : formatter.moneyFormat.format(money);
+        String preparedText = Optional.ofNullable(money).isEmpty() ? formatter.defaultText() : formatter.moneyFormat().format(money);
         insert(preparedText);
         return this;
     }
@@ -100,7 +100,7 @@ public class FileCsvBuilder implements CsvBuilder {
 
     private void insert(String text) {
         try {
-            if (shouldAppendDelimiter) writer.append(formatter.delimiter);
+            if (shouldAppendDelimiter) writer.append(formatter.delimiter());
             writer.append(QUOTE).append(text).append(QUOTE);
             shouldAppendDelimiter = true;
         } catch (IOException ex) {

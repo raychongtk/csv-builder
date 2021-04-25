@@ -4,29 +4,49 @@ import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
 
 public class CsvFormatter {
-    public DecimalFormat moneyFormat;
-    public DateTimeFormatter dateTimeFormatter;
-    public String delimiter;
-    public String defaultText;
-    public boolean numberAsString; // for applying NUMBER_AS_STRING_FORMAT to data, make excel to interpret value as text
+    private DecimalFormat moneyFormat;
+    private DateTimeFormatter dateTimeFormatter;
+    private String delimiter;
+    private String defaultText;
+    private boolean numberAsString; // for applying NUMBER_AS_STRING_FORMAT to data, make excel to interpret value as text
 
-    public void money(DecimalFormat format) {
+    void money(DecimalFormat format) {
         moneyFormat = format;
     }
 
-    public void dateTime(DateTimeFormatter format) {
+    void dateTime(DateTimeFormatter format) {
         dateTimeFormatter = format;
     }
 
-    public void delimiter(String delimiter) {
+    void delimiter(String delimiter) {
         this.delimiter = delimiter;
     }
 
-    public void defaultText(String text) {
+    void defaultText(String text) {
         this.defaultText = text;
     }
 
-    public void numberAsString(boolean numberAsString) {
+    void numberAsString(boolean numberAsString) {
         this.numberAsString = numberAsString;
+    }
+
+    public DecimalFormat moneyFormat() {
+        return moneyFormat;
+    }
+
+    public DateTimeFormatter dateTimeFormat() {
+        return dateTimeFormatter;
+    }
+
+    public String delimiter() {
+        return delimiter;
+    }
+
+    public String defaultText() {
+        return defaultText;
+    }
+
+    public boolean numberAsString() {
+        return numberAsString;
     }
 }
